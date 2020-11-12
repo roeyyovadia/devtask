@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Database;
 using devtask.Objects;
 using System.Security.Cryptography.X509Certificates;
+using devtask.Util;
 
 namespace devtask.Controllers
 {
@@ -50,7 +51,8 @@ namespace devtask.Controllers
         public async Task<IActionResult> PutStatus(Guid id, Status status)
         {            
             //Only One Initial
-            if (status.mode == Enum.statusMode.initial && _context.Status.FirstOrDefault(s => s.mode == Enum.statusMode.initial) != null)
+            if(status.labelsLst.Contains(PARAMS.LABEL_INIT) && _context.Status.FirstOrDefault(s => s.labelsLst.Contains(PARAMS.LABEL_INIT)) != null)
+                // if (status.mode == Enum.statusMode.initial && _context.Status.FirstOrDefault(s => s.mode == Enum.statusMode.initial) != null)
                 return BadRequest();
 
             if (id != status.id)
