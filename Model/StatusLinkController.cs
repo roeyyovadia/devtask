@@ -10,7 +10,7 @@ namespace devtask.Model
     public class StatusLinkController
     {
 
-        string initStatus = "init";
+        string initStatus = "init" ;
         List<Status> statuses;
         List<Transaction> transactions;
 
