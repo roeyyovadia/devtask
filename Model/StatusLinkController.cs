@@ -10,28 +10,15 @@ namespace devtask.Model
     public class StatusLinkController
     {
 
-        string initStatus = "init";
+        string initStatus;
         List<Status> statuses;
         List<Transaction> transactions;
 
-        public StatusLinkController()
+        public StatusLinkController(string initStatus, List<Status> statuses , List<Transaction> transactions)
         {
-            statuses = new List<Status>();
-            statuses.Add(new Status("init", true));
-            statuses.Add(new Status("review", false));
-            statuses.Add(new Status("consider", false));
-            statuses.Add(new Status("reject", false));
-            statuses.Add(new Status("accept", false));
-            statuses.Add(new Status("have-lunch", false));
-            statuses.Add(new Status("have-dinner", false));
-            transactions = new List<Transaction>();
-            transactions.Add(new Transaction(statuses.First(s => s.name == "init"), statuses.First(s => s.name == "review")));
-            transactions.Add(new Transaction(statuses.First(s => s.name == "review"), statuses.First(s => s.name == "consider")));
-            transactions.Add(new Transaction(statuses.First(s => s.name == "consider"), statuses.First(s => s.name == "accept")));
-            transactions.Add(new Transaction(statuses.First(s => s.name == "consider"), statuses.First(s => s.name == "reject")));
-            transactions.Add(new Transaction(statuses.First(s => s.name == "review"), statuses.First(s => s.name == "reject")));
-            transactions.Add(new Transaction(statuses.First(s => s.name == "reject"), statuses.First(s => s.name == "review")));
-            transactions.Add(new Transaction(statuses.First(s => s.name == "have-lunch"), statuses.First(s => s.name == "have-dinner")));
+            this.initStatus = initStatus;
+            this.statuses = statuses;
+            this.transactions = transactions;
             getStatusLabels(initStatus, statuses, transactions);
         }
 
