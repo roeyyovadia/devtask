@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using devtask.Util;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,35 +22,39 @@ namespace devtask.Objects
         {
         }
 
-        public Transaction(Status from , Status to)
+        public Transaction(Status from, Status to)
         {
-            if (!isVaild(from,to))
+            if (!isVaild(from, to))
                 return;
             id = new Guid();
             this.from = from;
             this.to = to;
         }
 
-        private bool isVaild(Status from , Status to)
+        private bool isVaild(Status from, Status to)
         {
-            if (isInitToOrphan(from,to))
+            if (isInitToOrphan(from, to))
                 return false;
-            if (isFinal(from, to))
+            if (isFinal(from))
                 return false;
             return true;
         }
 
+        //Extra protection Maybe not needed
         private bool isInitToOrphan(Status from, Status to)
-        {
-            if (from.mode == Enum.statusMode.initial && to.mode == Enum.statusMode.orphan)
-                return true;
+        {            
+            if (from.labelsLst != null && to.labelsLst != null)
+                if (from.labelsLst.Contains(PARAMS.LABEL_INIT) && to.labelsLst.Contains(PARAMS.LABEL_ORPHAN))
+                    return true;
             return false;
         }
 
-        private bool isFinal(Status from, Status to)
+        //Maybe not needed
+        private bool isFinal(Status from)
         {
-            if (from.mode == Enum.statusMode.final)
-                return true;
+            if (from.labelsLst != null)
+                if (from.labelsLst.Contains(PARAMS.LABEL_FINAL))
+                    return true;
             return false;
         }
     }

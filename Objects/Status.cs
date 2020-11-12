@@ -1,4 +1,5 @@
 ﻿using devtask.Enum;
+using devtask.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,28 +12,33 @@ namespace devtask.Objects
 {
     public class Status
     {
-        [Key]        
+        [Key]
         public Guid id { get; set; }
         [Column(TypeName = "string")]
         public string name { get; set; }
         [Column]
-        public statusMode mode{ get; set; }
+        public List<string> labelsLst { get; set; }
+        //public statusMode mode{ get; set; }
 
 
-        public Status(string name)
+        public Status(string name, bool isFrist)
         {
             id = new Guid();
             this.name = name;
-            mode = statusMode.none;
+            labelsLst = new List<string>();
+            if (isFrist)
+                labelsLst.Add(PARAMS.LABEL_INIT);
         }
 
-        public Status(string name , statusMode mode)
+        public Status(string name, List<string> labelsLst)
         {
             id = new Guid();
             this.name = name;
-            this.mode = mode;
+            this.labelsLst = labelsLst;
         }
+
 
     }
-    
+
+
 }
